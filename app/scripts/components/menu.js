@@ -1,86 +1,63 @@
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import Searchbar from "./searchbar";
+
+const NAV_ITEMS = [
+  "HOLIDAY",
+  "WHAT'S NEW",
+  "PRODUCTS",
+  "BESTSELLERS",
+  "GOODBYES",
+  "STORES",
+  "INSPIRATION",
+];
+
+const NavItem = ({ item }) => {
+  return (
+    <a href="#" className="nav-item">
+      {item}
+    </a>
+  );
+};
+NavItem.propTypes = {
+  item: PropTypes.string.isRequired,
+};
+
 /**
- * This file will hold the Menu that lives at the top of the Page, this is all rendered using a React Component...
- * 
+ * The Menu component that lives at the top of the Page.
  */
-import React from 'react';
+const Menu = () => {
+  const [showSearch, setShowSearch] = useState(false);
 
-class Menu extends React.Component {
+  // Explanation: We don't need the event or to prevent default after changing the anchor element to a button
+  const toggleShowSearch = () => {
+    setShowSearch((prevState) => !prevState);
+  };
 
-    /**
-     * Main constructor for the Menu Class
-     * @memberof Menu
-     */
-    constructor() {
-        super();
-        this.state = {
-            showingSearch: false
-        };
-    }
+  const hideSearch = () => setShowSearch(false);
 
-    /**
-     * Shows or hides the search container
-     * @memberof Menu
-     * @param e [Object] - the event from a click handler
-     */
-    showSearchContainer(e) {
-        e.preventDefault();
-        this.setState({
-            showingSearch: !this.state.showingSearch
-        });
-    }
+  return (
+    <header className="menu">
+      <div className="menu-container">
+        <div className="menu-holder">
+          <h1>ELC</h1>
+          <nav>
+            {NAV_ITEMS.map((item) => (
+              <NavItem key={item} item={item} />
+            ))}
 
-    /**
-     * Calls upon search change
-     * @memberof Menu
-     * @param e [Object] - the event from a text change handler
-     */
-    onSearch(e) {
-        
-        // Start Here
-        // ...
-        
+            {/* Explanation: a button is better semantically than anchor */}
+            <button aria-label="Show searchbar" onClick={toggleShowSearch}>
+              <i className="material-icons search">search</i>
+            </button>
+          </nav>
+        </div>
+      </div>
+      <div className={`${showSearch ? "showing" : ""} search-container`}>
+        <Searchbar onClose={hideSearch} />
+      </div>
+    </header>
+  );
+};
 
-    }
-
-    /**
-     * Renders the default app in the window, we have assigned this to an element called root.
-     * 
-     * @returns JSX
-     * @memberof App
-    */
-    render() {
-        return (
-            <header className="menu">
-                <div className="menu-container">
-                    <div className="menu-holder">
-                        <h1>ELC</h1>
-                        <nav>
-                            <a href="#" className="nav-item">HOLIDAY</a>
-                            <a href="#" className="nav-item">WHAT'S NEW</a>
-                            <a href="#" className="nav-item">PRODUCTS</a>
-                            <a href="#" className="nav-item">BESTSELLERS</a>
-                            <a href="#" className="nav-item">GOODBYES</a>
-                            <a href="#" className="nav-item">STORES</a>
-                            <a href="#" className="nav-item">INSPIRATION</a>
-
-                            <a href="#" onClick={(e) => this.showSearchContainer(e)}>
-                                <i className="material-icons search">search</i>
-                            </a>
-                        </nav>
-                    </div>
-                </div>
-                <div className={(this.state.showingSearch ? "showing " : "") + "search-container"}>
-                    <input type="text" onChange={(e) => this.onSearch(e)} />
-                    <a href="#" onClick={(e) => this.showSearchContainer(e)}>
-                        <i className="material-icons close">close</i>
-                    </a>
-                </div>
-            </header>
-        );
-    }
-
-
-}
-
-// Export out the React Component
 export default Menu;
