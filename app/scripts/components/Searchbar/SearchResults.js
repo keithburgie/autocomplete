@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import ProductDisplay from "./ProductDisplay";
 import SearchResultsPagination from "./SearchResultsPagination";
@@ -11,13 +11,22 @@ const SearchResults = ({
   prefetchedData,
   setSearchResults,
 }) => {
+  const [activeItem, setActiveItem] = useState(null);
+  useEffect(() => {
+    console.log("Active item updated:", activeItem);
+  }, [activeItem]);
   return (
     <div className="search-results--overlay">
       <section>
         <h2 className="section-heading">Featured Results</h2>
         <div className="search-results-grid">
           {searchResults.map((item) => (
-            <ProductDisplay key={item._id} product={item} />
+            <ProductDisplay
+              key={item._id}
+              product={item}
+              activeItem={activeItem}
+              setActiveItem={setActiveItem}
+            />
           ))}
         </div>
         <SearchResultsPagination
@@ -30,7 +39,16 @@ const SearchResults = ({
         />
       </section>
       <section>
-        <h2 className="section-heading">Top Searches</h2>
+        <h2 className="section-heading">Top Searches?</h2>
+        <div className="active-item-preview">
+          {activeItem && (
+            <ProductDisplay
+              product={activeItem}
+              activeItem={null}
+              setActiveItem={() => {}}
+            />
+          )}
+        </div>
       </section>
     </div>
   );

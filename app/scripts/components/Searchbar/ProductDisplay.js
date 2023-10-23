@@ -1,10 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const ProductDisplay = ({ product }) => {
+const ProductDisplay = ({ product, activeItem, setActiveItem }) => {
   const { picture, name, price, about, tags } = product;
+
+  const handleMouseEnter = () => {
+    console.log("Mouse entered", product._id);
+    if (!activeItem || activeItem._id !== product._id) {
+      setActiveItem(product);
+    }
+  };
+
   return (
-    <div className="search-item-display">
+    <div className="search-item-display" onMouseEnter={handleMouseEnter}>
       <div className="product-image">
         <picture>
           <source srcSet={picture} media="(min-width: 1024px)" />
@@ -28,16 +36,20 @@ const ProductDisplay = ({ product }) => {
   );
 };
 
+const productPropType = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  isActive: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired,
+  picture: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  about: PropTypes.string.isRequired,
+  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+});
+
 ProductDisplay.propTypes = {
-  product: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    isActive: PropTypes.string.isRequired,
-    price: PropTypes.string.isRequired,
-    picture: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    about: PropTypes.string.isRequired,
-    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  }).isRequired,
+  product: productPropType.isRequired,
+  activeItem: productPropType,
+  setActiveItem: PropTypes.func,
 };
 
 export default ProductDisplay;
