@@ -4,22 +4,18 @@ import ProductDisplay from "./ProductDisplay";
 
 const SearchResults = ({ searchResults }) => {
   return (
-    <div className="search-results-overlay">
-      <div aria-label="search-results" className="search-results-container">
-        <div>
-          <h2>Featured Results</h2>
-          <ul className="search-results-grid">
-            {searchResults.map((item) => (
-              <li key={item.id}>
-                <ProductDisplay product={item} />
-              </li>
-            ))}
-          </ul>
+    <div className="search-results--overlay">
+      <section>
+        <h2 className="section-heading">Featured Results</h2>
+        <div className="search-results-grid">
+          {searchResults.map((item) => (
+            <ProductDisplay key={item.id} product={item} />
+          ))}
         </div>
-        <div>
-          <h2>Top Searches</h2>
-        </div>
-      </div>
+      </section>
+      <section>
+        <h2 className="section-heading">Top Searches</h2>
+      </section>
     </div>
   );
 };

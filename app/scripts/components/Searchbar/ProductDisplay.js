@@ -4,15 +4,15 @@ import PropTypes from "prop-types";
 const ProductDisplay = ({ product }) => {
   const { picture, name, price, about, tags } = product;
   return (
-    <div className="product-display">
-      <div className="product-display__image">
+    <div className="search-item-display">
+      <div className="product-image">
         <picture>
           <source srcSet={picture} media="(min-width: 1024px)" />
           <source srcSet={picture} media="(min-width: 768px)" />
           <img src={picture} alt={name} loading="lazy" />
         </picture>
       </div>
-      <div className="product-display__info">
+      <div className="product-info">
         <p>
           <strong>{name}</strong>
         </p>
