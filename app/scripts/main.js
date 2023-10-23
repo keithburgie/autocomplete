@@ -13,7 +13,7 @@
  * Firstly we need to import the React JS Library
  */
 import React from "react";
-import { createRoot } from "react-dom";
+import { createRoot } from "react-dom/client";
 
 import Menu from "./components/menu";
 import Home from "./components/home";
