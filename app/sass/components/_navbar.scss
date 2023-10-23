@@ -1,0 +1,40 @@
+.menu-navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-items: stretch;
+  max-width: $siteWidth;
+  margin: 0 auto;
+
+  > * {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.navbar-logo {
+  span {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.5rem;
+    color: white;
+  }
+}
+
+.menu-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+  margin: 0 3.25rem;
+
+  .nav-item {
+    font-family: Helvetica, Arial, Sans-Serif;
+    font-size: $navItemFontSize;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    color: #fff;
+    padding: 0.5rem;
+  }
+}

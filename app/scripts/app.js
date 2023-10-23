@@ -1,8 +1,7 @@
-// new App.tsx
 import React from "react";
 
 import Menu from "./components/Menu";
-import Home from "./components/home";
+import Home from "./pages/Home";
 
 const App = () => {
   return (

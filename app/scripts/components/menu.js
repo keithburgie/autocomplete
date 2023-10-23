@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import Searchbar from "./Searchbar";
-import ProductDisplay from "./ProductDisplay";
+import { SearchResults, Searchbar } from "./Searchbar";
 import { Navbar, NavbarLogo, NavbarNav } from "./Navbar";
 
 const NAV_ITEMS = [
@@ -100,42 +98,19 @@ const Menu = () => {
   const hideSearch = () => setShowSearch(false);
 
   return (
-    <>
-      <header className="menu">
-        <Navbar>
-          <NavbarLogo title="ELC" />
-          <NavbarNav navItems={NAV_ITEMS} />
-          <Searchbar
-            isShown={showSearch}
-            toggleShowSearch={toggleShowSearch}
-            setSearchResults={setSearchResults}
-          />
-        </Navbar>
+    <header className="menu">
+      <Navbar>
+        <NavbarLogo title="ELC" />
+        <NavbarNav navItems={NAV_ITEMS} />
+        <Searchbar
+          isShown={showSearch}
+          toggleShowSearch={toggleShowSearch}
+          setSearchResults={setSearchResults}
+        />
+      </Navbar>
 
-        {showSearchResults && (
-          <div className="search-results-overlay">
-            <div
-              aria-label="search-results"
-              className="search-results-container"
-            >
-              <div>
-                <h2>Featured Results</h2>
-                <ul className="search-results-grid">
-                  {searchResults.map((item) => (
-                    <li key={item.id}>
-                      <ProductDisplay product={item} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h2>Top Searches</h2>
-              </div>
-            </div>
-          </div>
-        )}
-      </header>
-    </>
+      {showSearchResults && <SearchResults searchResults={searchResults} />}
+    </header>
   );
 };
 

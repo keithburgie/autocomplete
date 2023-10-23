@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { searchItems } from "../api/services";
-import { createDebouncedSearch } from "../utils";
+import { searchItems } from "../../api/services";
+import { createDebouncedSearch } from "./helpers";
 
 const Searchbar = ({ isShown, toggleShowSearch, setSearchResults }) => {
   const [searchValue, setSearchValue] = useState("cond");
