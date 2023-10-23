@@ -20,54 +20,48 @@
 }
 */
 const data = require("./data");
-const http = require("http");
-const hostname = "localhost";
-const port = 3035;
+const express = require("express");
+const cors = require("cors");
+const {
+  APP_HOST,
+  APP_PORT,
+  SERVER_PORT,
+  SERVER_HOST,
+  SERVER_PROTOCOL,
+} = require("../config/development.config");
+const { caseInsensitiveMatch } = require("./utils");
 
-/**
- * Start the Node Server Here...
- *
- * The http.createServer() method creates a new server that listens at the specified port.
- * The requestListener function (function (req, res)) is executed each time the server gets a request.
- * The Request object 'req' represents the request to the server.
- * The ServerResponse object 'res' represents the writable stream back to the client.
- */
-
-/**
- * Suggestion: install expressjs:
- * ```
- * const express = require('express');
 const app = express();
-const port = 3035;
-const data = require('./data');
 
-app.get('/products/search', (req, res) => {
-    const query = req.query.query.toLowerCase();
-    const results = data.filter(product => 
-        product.name.toLowerCase().includes(query) ||
-        product.tags.some(tag => tag.toLowerCase().includes(query))
-    );
-    res.json(results);
-});
-
-app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-});
- * ```
- */
-
-http
-  .createServer(function (req, res) {
-    // .. Here you can create your data response in a JSON format
-
-    // Set the header to inform the client we're sending JSON
-    res.setHeader("Content-Type", "application/json");
-
-    // Send the data as a JSON string
-    res.write(JSON.stringify(data));
-
-    res.end(); //end the response
+app.use(
+  cors({
+    origin: `${SERVER_PROTOCOL}://${APP_HOST}:${APP_PORT}`, // Allow only 'http://localhost:3030' to access your Express server
+    optionsSuccessStatus: 200, // Respond with 200 for preflight OPTIONS requests
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
-  .listen(port);
+);
 
-console.log(`[Server running on ${hostname}:${port}]`);
+app.get("/search", (req, res) => {
+  const query = req.query.query;
+
+  const results = data.filter((item) => {
+    // Only return items that are active
+    if (item.isActive === "true") {
+      return (
+        caseInsensitiveMatch(item._id, query) ||
+        caseInsensitiveMatch(item.name, query) ||
+        caseInsensitiveMatch(item.about, query) ||
+        item.tags.some((tag) => caseInsensitiveMatch(tag, query))
+      );
+    }
+  });
+
+  res.json({ items: results });
+});
+
+app.listen(SERVER_PORT, () => {
+  console.log(
+    `Server started on ${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}`
+  );
+});

@@ -3,52 +3,17 @@
 * It contains the universal styles of the site, the imports and various other items.
 */
 // Colours and settings
-$siteWidth: 1280px;
+$siteWidth: 80rem;
+$headerHeight: 4.375rem;
+$navItemFontSize: 1.125rem;
 
-// Imports
-@import '_menu.scss';
-@import '_home.scss';
+// Global styles should be imported first
+@import "global";
 
+// Page styles
+@import "pages/home";
 
-html, html * {
-    box-sizing: border-box; padding: 0; margin: 0;
-}
-
-// These are used to ensure the app runs full display
-html, body {
-    width: 100%; height: 100%;
-}
-
-// Main body content
-main {
-
-    // The main body of the page
-    width: 100%;
-    height: 100%;
-    display: block;
-    position: relative;
-
-    * {
-        -webkit-font-smoothing: antialiased;
-    }
-    
-    // The links for the app all have these main attributes
-    a {
-        transition: opacity .5s;
-
-        &:hover {
-            opacity: 0.7;
-        }
-        &:visited {
-            color: inherit;
-        }
-    }
-
-    // Inner Divs are used for general full width containers
-    div.inner { 
-        width: 100%;
-        height: auto;
-        background-color: rgb(150, 0, 0);
-    }
-
-}
+// Component styles
+@import "components/menu";
+@import "components/navbar";
+@import "components/searchbar";

@@ -1,0 +1,18 @@
+/**
+Note: The content of the site was shifted with absolute positioning to get a certain background image placement. After these changes, the appearance is the same, but future content and layout changes will be much easier to manage.
+*/
+#home {
+  flex: 1;
+  padding: 0 1.25rem;
+  background-image: url("/img/header.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+
+  .content {
+    max-width: $siteWidth;
+    margin: 0 auto;
+    color: #fff;
+    padding-top: 1.875rem;
+  }
+}
