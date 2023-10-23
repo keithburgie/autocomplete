@@ -15,7 +15,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 
-import Menu from "./components/menu";
+import Menu from "./components/Menu";
 import Home from "./components/home";
 
 /**

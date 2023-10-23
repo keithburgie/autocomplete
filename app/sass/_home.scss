@@ -7,8 +7,7 @@ Note: The content of the site was shifted with absolute positioning to get a cer
   background-image: url("/img/header.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position-x: center;
-  background-position-y: -$headerHeight;
+  background-position: center top;
 
   .content {
     max-width: $siteWidth;

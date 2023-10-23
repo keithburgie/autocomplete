@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Searchbar from "./Searchbar";
+import ProductDisplay from "./ProductDisplay";
 
 const NAV_ITEMS = [
   "HOLIDAY",
@@ -28,6 +29,14 @@ NavItem.propTypes = {
  */
 const Menu = () => {
   const [showSearch, setShowSearch] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
+
+  useEffect(() => {
+    if (searchResults.length > 0) {
+      setShowSearchResults(true);
+    }
+  }, [searchResults]);
 
   // Explanation: We don't need the event or to prevent default after changing the anchor element to a button
   const toggleShowSearch = () => {
@@ -37,19 +46,32 @@ const Menu = () => {
   const hideSearch = () => setShowSearch(false);
 
   return (
-    <header className="menu">
-      <div className="menu-navbar">
-        <div className="menu-logo">
-          <h1>ELC</h1>
+    <>
+      <header className="menu">
+        <div className="menu-navbar">
+          <div className="menu-logo">
+            <h1>ELC</h1>
+          </div>
+          <nav className="menu-nav" role="navigation">
+            {NAV_ITEMS.map((item) => (
+              <NavItem key={item} item={item} />
+            ))}
+          </nav>
+          <Searchbar
+            isShown={showSearch}
+            toggleShowSearch={toggleShowSearch}
+            setSearchResults={setSearchResults}
+          />
         </div>
-        <nav className="menu-nav" role="navigation">
-          {NAV_ITEMS.map((item) => (
-            <NavItem key={item} item={item} />
+      </header>
+      {showSearchResults && (
+        <div className={`search-results-overlay`}>
+          {searchResults.map((item) => (
+            <ProductDisplay key={item.id} product={item} />
           ))}
-        </nav>
-        <Searchbar isShown={showSearch} toggleShowSearch={toggleShowSearch} />
-      </div>
-    </header>
+        </div>
+      )}
+    </>
   );
 };
 
