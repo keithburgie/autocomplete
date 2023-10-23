@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import Searchbar from "./searchbar";
+import Searchbar from "./Searchbar";
 
 const NAV_ITEMS = [
   "HOLIDAY",
@@ -47,7 +47,7 @@ const Menu = () => {
             <NavItem key={item} item={item} />
           ))}
         </nav>
-        <Searchbar isShown={showSearch} onHide={hideSearch} />
+        <Searchbar isShown={showSearch} toggleShowSearch={toggleShowSearch} />
       </div>
     </header>
   );
