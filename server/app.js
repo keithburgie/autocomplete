@@ -20,7 +20,6 @@
 }
 */
 const data = require("./data");
-const http = require("http");
 const express = require("express");
 const cors = require("cors");
 const {
@@ -34,53 +33,30 @@ const { caseInsensitiveMatch } = require("./utils");
 
 const app = express();
 
-const corsOptions = {
-  origin: `${SERVER_PROTOCOL}://${APP_HOST}:${APP_PORT}`, // Allow only 'http://localhost:3030' to access your Express server
-  optionsSuccessStatus: 200, // Respond with 200 for preflight OPTIONS requests
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
-
-/**
- * Suggestion: install expressjs:
- * ```
-
-app.get('/products/search', (req, res) => {
-    const query = req.query.query.toLowerCase();
-    const results = data.filter(product => 
-        product.name.toLowerCase().includes(query) ||
-        product.tags.some(tag => tag.toLowerCase().includes(query))
-    );
-    res.json(results);
-});
-
-app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
-});
- * ```
- */
-
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: `${SERVER_PROTOCOL}://${APP_HOST}:${APP_PORT}`, // Allow only 'http://localhost:3030' to access your Express server
+    optionsSuccessStatus: 200, // Respond with 200 for preflight OPTIONS requests
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 app.get("/search", (req, res) => {
   const query = req.query.query;
-  console.log(req.query);
 
   const results = data.filter((item) => {
-    return (
-      caseInsensitiveMatch(item._id, query) ||
-      caseInsensitiveMatch(item.name, query) ||
-      caseInsensitiveMatch(item.about, query) ||
-      item.tags.some((tag) => caseInsensitiveMatch(tag, query))
-    );
+    // Only return items that are active
+    if (item.isActive === "true") {
+      return (
+        caseInsensitiveMatch(item._id, query) ||
+        caseInsensitiveMatch(item.name, query) ||
+        caseInsensitiveMatch(item.about, query) ||
+        item.tags.some((tag) => caseInsensitiveMatch(tag, query))
+      );
+    }
   });
 
-  //   // Filtering data based on the query
-  //   const results = data.filter((item) =>
-  //     item.name.toLowerCase().includes(query.toLowerCase())
-  //   );
-
-  // Return the results
   res.json({ items: results });
 });
 

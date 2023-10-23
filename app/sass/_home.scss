@@ -1,21 +1,19 @@
 /**
- * This is the central home page
- *
- */
-section#home {
+Note: The content of the site was shifted with absolute positioning to get a certain background image placement. After these changes, the appearance is the same, but future content and layout changes will be much easier to manage.
+*/
+#home {
+  flex: 1;
+  padding: 0 1.25rem;
+  background-image: url("/img/header.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: -$headerHeight;
 
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0; left: 0;
-    padding: 100px 20px 0;
-    background-image: url('/img/header.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-
-    div.content {
-        max-width: $siteWidth;
-        margin: 0 auto;
-        color: #FFF;
-    }
+  .content {
+    max-width: $siteWidth;
+    margin: 0 auto;
+    color: #fff;
+    padding-top: 1.875rem;
+  }
 }

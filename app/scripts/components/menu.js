@@ -38,23 +38,16 @@ const Menu = () => {
 
   return (
     <header className="menu">
-      <div className="menu-container">
-        <div className="menu-holder">
+      <div className="menu-navbar">
+        <div className="menu-logo">
           <h1>ELC</h1>
-          <nav>
-            {NAV_ITEMS.map((item) => (
-              <NavItem key={item} item={item} />
-            ))}
-
-            {/* Explanation: a button is better semantically than anchor */}
-            <button aria-label="Show searchbar" onClick={toggleShowSearch}>
-              <i className="material-icons search">search</i>
-            </button>
-          </nav>
         </div>
-      </div>
-      <div className={`${showSearch ? "showing" : ""} search-container`}>
-        <Searchbar onClose={hideSearch} />
+        <nav className="menu-nav" role="navigation">
+          {NAV_ITEMS.map((item) => (
+            <NavItem key={item} item={item} />
+          ))}
+        </nav>
+        <Searchbar isShown={showSearch} onHide={hideSearch} />
       </div>
     </header>
   );

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { debounce } from "../utils";
 import { searchItems } from "../api/services";
 
-const Searchbar = ({ onClose }) => {
+const Searchbar = ({ isShown, toggleShowSearch }) => {
   const [searchValue, setSearchValue] = useState("");
 
   /**
@@ -34,22 +34,31 @@ const Searchbar = ({ onClose }) => {
   };
 
   return (
-    <>
+    <div className={`search-container${isShown ? " showing" : ""}`}>
       <input type="text" value={searchValue} onChange={onSearch} />
-      {/* Explanation: a button is better semantically than anchor */}
-      <button aria-label="Close searchbar" onClick={onClose}>
-        <i className="material-icons close">close</i>
+      <button
+        className="search-trigger"
+        aria-label={isShown ? "Hide searchbar" : "Show searchbar"}
+        onClick={toggleShowSearch}
+      >
+        <i className={`material-icons ${isShown ? "close" : "search"}`}>
+          {isShown ? "close" : "search"}
+        </i>
       </button>
-    </>
+    </div>
   );
 };
 
 Searchbar.propTypes = {
   /**
+   * Whether or not the search component is shown.
+   */
+  isShown: PropTypes.bool.isRequired,
+  /**
    * Handler to close or hide the search component.
    * Expected signature: (value: React.SetStateAction<boolean>) => void
    */
-  onClose: PropTypes.func.isRequired,
+  toggleShowSearch: PropTypes.func.isRequired,
 };
 
 export default Searchbar;
