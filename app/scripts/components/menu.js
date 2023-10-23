@@ -22,9 +22,10 @@ const Menu = () => {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [currentResultsPage, setCurrentResultsPage] = useState(1);
 
+  const [prefetchedData, setPrefetchedData] = useState({});
+
   useEffect(() => {
     if (searchResults.length > 0) {
-      // console.log(searchResults);
       setShowSearchResults(true);
     }
   }, [searchResults]);
@@ -47,6 +48,7 @@ const Menu = () => {
           setSearchResults={setSearchResults}
           setTotalResults={setTotalResults}
           currentResultsPage={currentResultsPage}
+          setPrefetchedData={setPrefetchedData}
         />
       </Navbar>
 
@@ -56,6 +58,8 @@ const Menu = () => {
           numSearchResults={numSearchResults}
           setCurrentResultsPage={setCurrentResultsPage}
           currentResultsPage={currentResultsPage}
+          setSearchResults={setSearchResults}
+          prefetchedData={prefetchedData}
         />
       )}
     </header>

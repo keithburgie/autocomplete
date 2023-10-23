@@ -8,8 +8,9 @@ const SearchResults = ({
   numSearchResults,
   currentResultsPage,
   setCurrentResultsPage,
+  prefetchedData,
+  setSearchResults,
 }) => {
-  // console.log(searchResults);
   return (
     <div className="search-results--overlay">
       <section>
@@ -24,6 +25,8 @@ const SearchResults = ({
           itemsPerPage={searchResults.length}
           numSearchResults={numSearchResults}
           setCurrentResultsPage={setCurrentResultsPage}
+          prefetchedData={prefetchedData}
+          setSearchResults={setSearchResults}
         />
       </section>
       <section>
@@ -48,6 +51,9 @@ SearchResults.propTypes = {
   numSearchResults: PropTypes.number.isRequired,
   currentResultsPage: PropTypes.number.isRequired,
   setCurrentResultsPage: PropTypes.func.isRequired,
+  setPrefetchedData: PropTypes.func.isRequired,
+  prefetchedData: PropTypes.object.isRequired,
+  setSearchResults: PropTypes.func.isRequired,
 };
 
 export default SearchResults;

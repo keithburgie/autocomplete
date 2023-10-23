@@ -9,6 +9,7 @@ const Searchbar = ({
   toggleShowSearch,
   setSearchResults,
   setTotalResults,
+  setPrefetchedData,
 }) => {
   const [searchValue, setSearchValue] = useState("");
 
@@ -17,12 +18,12 @@ const Searchbar = ({
       action: searchItems,
       setSearchResults,
       setTotalResults,
+      setPrefetchedData,
       page: currentResultsPage,
     })
   );
 
   useEffect(() => {
-    // console.log(currentResultsPage);
     if (searchValue) {
       debouncedSearchRef.current(searchValue, currentResultsPage); // pass currentResultsPage here
     }
@@ -57,29 +58,13 @@ const Searchbar = ({
 };
 
 Searchbar.propTypes = {
-  /**
-   * The current page of results.
-   */
   currentResultsPage: PropTypes.number.isRequired,
-  /**
-   * Whether or not the search component is shown.
-   */
   isShown: PropTypes.bool.isRequired,
-  /**
-   * Handler to close or hide the search component.
-   * Expected signature: (value: React.SetStateAction<boolean>) => void
-   */
   setSearchResults: PropTypes.func.isRequired,
-  /**
-   * Handler to close or hide the search component.
-   * Expected signature: (value: React.SetStateAction<boolean>) => void
-   */
   setTotalResults: PropTypes.func.isRequired,
-  /**
-   * Handler to close or hide the search component.
-   * Expected signature: (value: React.SetStateAction<boolean>) => void
-   */
   toggleShowSearch: PropTypes.func.isRequired,
+
+  setPrefetchedData: PropTypes.func.isRequired,
 };
 
 export default Searchbar;

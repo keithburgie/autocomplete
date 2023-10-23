@@ -6,6 +6,8 @@ const SearchResultsPagination = ({
   itemsPerPage,
   numSearchResults,
   setCurrentResultsPage,
+  prefetchedData,
+  setSearchResults,
 }) => {
   const getFirstItemIndex = () => {
     return (currentPageNumber - 1) * itemsPerPage + 1;
@@ -26,11 +28,19 @@ const SearchResultsPagination = ({
   };
 
   const handlePrevClick = () => {
-    setCurrentResultsPage((prevPage) => prevPage - 1);
+    const newPage = currentPageNumber - 1;
+    if (prefetchedData[newPage]) {
+      setSearchResults(prefetchedData[newPage]);
+    }
+    setCurrentResultsPage(newPage);
   };
 
   const handleNextClick = () => {
-    setCurrentResultsPage((prevPage) => prevPage + 1);
+    const newPage = currentPageNumber + 1;
+    if (prefetchedData[newPage]) {
+      setSearchResults(prefetchedData[newPage]);
+    }
+    setCurrentResultsPage(newPage);
   };
 
   const hasMultiplePages = numSearchResults > itemsPerPage;
@@ -59,6 +69,8 @@ SearchResultsPagination.propTypes = {
   itemsPerPage: PropTypes.number.isRequired,
   numSearchResults: PropTypes.number.isRequired,
   setCurrentResultsPage: PropTypes.func.isRequired,
+  prefetchedData: PropTypes.object.isRequired,
+  setSearchResults: PropTypes.func.isRequired,
 };
 
 export default SearchResultsPagination;
