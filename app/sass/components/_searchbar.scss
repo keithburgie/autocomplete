@@ -91,6 +91,11 @@
   }
 }
 
+.search-results-pagination {
+  display: flex;
+  justify-content: space-between;
+}
+
 /* This is to remove the scrollbars (optional) */
 .search-results-overlay::-webkit-scrollbar {
   display: none;

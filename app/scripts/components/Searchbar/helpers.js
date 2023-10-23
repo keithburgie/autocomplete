@@ -12,16 +12,18 @@ export function debounce(func, wait) {
 /**
  * Debounced search function
  */
-export const createDebouncedSearch = (
-  searchFunction,
+export const createDebouncedSearch = ({
+  action,
   setSearchResults,
-  delay = 300
-) =>
-  debounce(async (query) => {
+  setTotalResults,
+  delay = 300,
+}) =>
+  debounce(async (query, page) => {
     try {
-      const data = await searchFunction(query);
+      const data = await action(query, page);
       setSearchResults(data.items);
-      console.log(data.items);
+      setTotalResults(data.total);
+      // console.log({ data });
     } catch (error) {
       console.error("Error fetching search results:", error);
     }

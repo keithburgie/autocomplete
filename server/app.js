@@ -42,8 +42,11 @@ app.use(
   })
 );
 
+const MAX_RESULTS_PER_PAGE = 4;
+
 app.get("/search", (req, res) => {
   const query = req.query.query;
+  const pageNumber = parseInt(req.query.page || "1");
 
   const results = data.filter((item) => {
     // Only return items that are active
@@ -57,7 +60,20 @@ app.get("/search", (req, res) => {
     }
   });
 
-  res.json({ items: results });
+  // Step 3: Paginate the results
+  const startIndex = (pageNumber - 1) * MAX_RESULTS_PER_PAGE;
+
+  const paginatedResults = results.slice(
+    startIndex,
+    startIndex + MAX_RESULTS_PER_PAGE
+  );
+
+  res.json({
+    items: paginatedResults,
+    total: results.length,
+    currentPage: pageNumber,
+    totalPages: Math.ceil(results.length / MAX_RESULTS_PER_PAGE),
+  });
 });
 
 app.listen(SERVER_PORT, () => {
