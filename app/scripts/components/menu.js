@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Searchbar from "./Searchbar";
 import ProductDisplay from "./ProductDisplay";
+import { Navbar, NavbarLogo, NavbarNav } from "./Navbar";
 
 const NAV_ITEMS = [
   "HOLIDAY",
@@ -13,27 +14,80 @@ const NAV_ITEMS = [
   "INSPIRATION",
 ];
 
-const NavItem = ({ item }) => {
-  return (
-    <a href="#" className="nav-item">
-      {item}
-    </a>
-  );
-};
-NavItem.propTypes = {
-  item: PropTypes.string.isRequired,
-};
+const devSearchResults = [
+  {
+    _id: "001",
+    isActive: "true",
+    price: "20.00",
+    picture: "/img/products/N0CA_430.png",
+    name: "Damage Reverse Oil Conditioner",
+    about:
+      "Dolor voluptate velit consequat duis. Aute ad officia fugiat esse anim exercitation voluptate excepteur pariatur sit culpa duis qui esse. Labore amet ad eu veniam nostrud minim labore aliquip est sint voluptate nostrud reprehenderit. Ipsum nostrud culpa consequat reprehenderit.",
+    tags: ["ojon", "oil", "conditioner"],
+  },
+  {
+    _id: "002",
+    isActive: "true",
+    price: "22.00",
+    picture: "/img/products/N0EN01_430.png",
+    name: "Volume Advance Conditioner",
+    about:
+      "Dolor voluptate velit consequat duis. Aute ad officia fugiat esse anim exercitation voluptate excepteur pariatur sit culpa duis qui esse. Labore amet ad eu veniam nostrud minim labore aliquip est sint voluptate nostrud reprehenderit. Ipsum nostrud culpa consequat reprehenderit.",
+    tags: ["ojon", "conditioner"],
+  },
+  {
+    _id: "008",
+    isActive: "true",
+    price: "27.00",
+    picture: "/img/products/N0PL01_430.png",
+    name: "Super Sleek Conditioner",
+    about:
+      "Dolor voluptate velit consequat duis. Aute ad officia fugiat esse anim exercitation voluptate excepteur pariatur sit culpa duis qui esse. Labore amet ad eu veniam nostrud minim labore aliquip est sint voluptate nostrud reprehenderit. Ipsum nostrud culpa consequat reprehenderit.",
+    tags: ["ojon", "conditioner"],
+  },
+  {
+    _id: "011",
+    isActive: "true",
+    price: "22.00",
+    picture: "/img/products/N08Y_430.png",
+    name: "Dry Recovery Hydrating Conditioner",
+    about:
+      "Dolor voluptate velit consequat duis. Aute ad officia fugiat esse anim exercitation voluptate excepteur pariatur sit culpa duis qui esse. Labore amet ad eu veniam nostrud minim labore aliquip est sint voluptate nostrud reprehenderit. Ipsum nostrud culpa consequat reprehenderit.",
+    tags: ["ojon", "hydrating", "conditioner"],
+  },
+  {
+    _id: "012",
+    isActive: "true",
+    price: "12.00",
+    picture: "/img/products/N12R01_430.png",
+    name: "Rare Blend Deep Conditioner",
+    about:
+      "Dolor voluptate velit consequat duis. Aute ad officia fugiat esse anim exercitation voluptate excepteur pariatur sit culpa duis qui esse. Labore amet ad eu veniam nostrud minim labore aliquip est sint voluptate nostrud reprehenderit. Ipsum nostrud culpa consequat reprehenderit.",
+    tags: ["ojon", "conditioner", "rare blend"],
+  },
+  {
+    _id: "013",
+    isActive: "true",
+    price: "25.00",
+    picture: "/img/products/N13J01_430.png",
+    name: "Rare Blend Moisture-Rich Cleansing Conditioner",
+    about:
+      "Dolor voluptate velit consequat duis. Aute ad officia fugiat esse anim exercitation voluptate excepteur pariatur sit culpa duis qui esse. Labore amet ad eu veniam nostrud minim labore aliquip est sint voluptate nostrud reprehenderit. Ipsum nostrud culpa consequat reprehenderit.",
+    tags: ["ojon", "cleansing", "conditioner", "rare blend"],
+  },
+];
 
 /**
  * The Menu component that lives at the top of the Page.
  */
 const Menu = () => {
   const [showSearch, setShowSearch] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState(devSearchResults);
   const [showSearchResults, setShowSearchResults] = useState(false);
 
   useEffect(() => {
     if (searchResults.length > 0) {
+      console.log(searchResults);
       setShowSearchResults(true);
     }
   }, [searchResults]);
@@ -48,29 +102,39 @@ const Menu = () => {
   return (
     <>
       <header className="menu">
-        <div className="menu-navbar">
-          <div className="menu-logo">
-            <h1>ELC</h1>
-          </div>
-          <nav className="menu-nav" role="navigation">
-            {NAV_ITEMS.map((item) => (
-              <NavItem key={item} item={item} />
-            ))}
-          </nav>
+        <Navbar>
+          <NavbarLogo title="ELC" />
+          <NavbarNav navItems={NAV_ITEMS} />
           <Searchbar
             isShown={showSearch}
             toggleShowSearch={toggleShowSearch}
             setSearchResults={setSearchResults}
           />
-        </div>
+        </Navbar>
+
+        {showSearchResults && (
+          <div className="search-results-overlay">
+            <div
+              aria-label="search-results"
+              className="search-results-container"
+            >
+              <div>
+                <h2>Featured Results</h2>
+                <ul className="search-results-grid">
+                  {searchResults.map((item) => (
+                    <li key={item.id}>
+                      <ProductDisplay product={item} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h2>Top Searches</h2>
+              </div>
+            </div>
+          </div>
+        )}
       </header>
-      {showSearchResults && (
-        <div className={`search-results-overlay`}>
-          {searchResults.map((item) => (
-            <ProductDisplay key={item.id} product={item} />
-          ))}
-        </div>
-      )}
     </>
   );
 };

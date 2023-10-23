@@ -5,15 +5,25 @@ const ProductDisplay = ({ product }) => {
   const { picture, name, price, about, tags } = product;
   return (
     <div className="product-display">
-      <img src={picture} alt={name} />
-      <h2>{name}</h2>
-      <h3>${price}</h3>
-      {/* <p>{about}</p> */}
-      {/* <ul>
+      <div className="product-display__image">
+        <picture>
+          <source srcSet={picture} media="(min-width: 1024px)" />
+          <source srcSet={picture} media="(min-width: 768px)" />
+          <img src={picture} alt={name} loading="lazy" />
+        </picture>
+      </div>
+      <div className="product-display__info">
+        <p>
+          <strong>{name}</strong>
+        </p>
+        <p>${price}</p>
+        {/* <p>{about}</p> */}
+        {/* <ul>
         {tags.map((tag) => (
           <li key={tag}>{tag}</li>
         ))}
       </ul> */}
+      </div>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { searchItems } from "../api/services";
 import { createDebouncedSearch } from "../utils";
 
 const Searchbar = ({ isShown, toggleShowSearch, setSearchResults }) => {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState("cond");
   const [isSearching, setIsSearching] = useState(false);
 
   const debouncedSearch = createDebouncedSearch(searchItems, setSearchResults);

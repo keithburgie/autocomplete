@@ -97,29 +97,62 @@ $navItemFontSize: 17px;
 }
 
 .search-results-overlay {
-  display: grid;
-  // grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
-  grid-auto-flow: column; /* Ensure items are placed horizontally */
-  grid-template-columns: repeat(
-    auto-fill,
-    25%
-  ); /* Here, 25% is the width of each item */
-  width: 100%;
-  overflow-x: auto;
-  white-space: nowrap;
+  position: absolute;
+  background: white;
+  top: $headerHeight;
+  right: 0;
+  width: 50%;
+
+  .search-results-container {
+    display: flex;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  ul.search-results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 2rem;
+    column-gap: 1.5rem;
+    width: 33.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      overflow: hidden;
+      display: flex;
+      gap: 0.5rem;
+    }
+  }
 
   .product-display {
-    text-align: center;
-    /* Define the default style for each grid item. 
-       You can set a width or let the content define its width */
-    // background-color: #ddd; /* Just for visualization */
-    padding: 20px;
-    // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a light shadow for a lifted effect */
-    min-width: 200px; /* Minimum width of each item */
+    display: flex;
+    position: relative;
 
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    &__image {
+      // position: relative;
+      width: 100px;
+      height: 100px;
+      // width: 100%;
+      // padding-top: 100%; /* 1:1 aspect ratio */
+      overflow: hidden;
+      background-color: lightgray;
+
+      img {
+        width: 100%; /* Fill up the container width */
+        height: 100%; /* Fill up the container height */
+        object-fit: cover; /* Image will cover the container and be cropped as required */
+        display: block; /* Remove any default margins or padding */
+
+        // position: absolute;
+        // top: 0;
+        // left: 0;
+        // width: 100%;
+        // height: 100%;
+        // object-fit: cover;
+      }
+    }
   }
 }
 
