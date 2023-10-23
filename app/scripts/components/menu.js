@@ -75,12 +75,15 @@ const devSearchResults = [
   },
 ];
 
+const initialSearchResults = [];
+// const initialSearchResults = devSearchResults
+
 /**
  * The Menu component that lives at the top of the Page.
  */
 const Menu = () => {
   const [showSearch, setShowSearch] = useState(false);
-  const [searchResults, setSearchResults] = useState(devSearchResults);
+  const [searchResults, setSearchResults] = useState(initialSearchResults);
   const [showSearchResults, setShowSearchResults] = useState(false);
 
   useEffect(() => {
