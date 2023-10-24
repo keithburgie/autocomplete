@@ -5,17 +5,8 @@ import { productPropType } from "./index";
 const ProductShowcase = ({ product, setSearchValue }) => {
   const { picture, name, price, about, tags } = product;
 
-  const handleClick = () => {
-    // create a button that would send a user to a page.
-    // also needs a close button
-  };
-
   const handleSearchTagClick = (tag) => {
-    // Set the search value to the clicked tag
     setSearchValue(tag);
-
-    // Optionally, you can also reset the current results page to 1 if desired
-    // setCurrentResultsPage(1);
   };
 
   return (

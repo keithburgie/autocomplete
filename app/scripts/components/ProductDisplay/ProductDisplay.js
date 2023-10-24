@@ -7,9 +7,20 @@ const ProductDisplay = ({ As = "div", product, activeItem, setActiveItem }) => {
 
   const isActiveItem = activeItem && activeItem._id === product._id;
 
-  const handleClick = () => {
+  const selectProduct = () => {
     if (!activeItem || !isActiveItem) {
       setActiveItem(product);
+    }
+  };
+
+  const handleClick = () => {
+    selectProduct();
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      selectProduct();
     }
   };
 
@@ -18,6 +29,8 @@ const ProductDisplay = ({ As = "div", product, activeItem, setActiveItem }) => {
       className="product-display"
       data-active={isActiveItem}
       onClick={handleClick}
+      onKeyDown={(e) => handleKeyDown(e)}
+      tabindex="0"
     >
       <div className="product-image">
         <picture>
