@@ -1,4 +1,4 @@
-export function debounce(func, wait) {
+function debounce(func, wait) {
   let timeout;
   return function (...args) {
     const context = this;
@@ -10,13 +10,25 @@ export function debounce(func, wait) {
 }
 
 /**
- * Debounced search function
+ * Todo: clean up and/or move this. It's made to be used like:
+ * 
+ * const debouncedSearchRef = useRef(
+    debouncedProductSearch({
+      action: searchItems,
+      setSearchResults,
+      setTotalResults,
+      setPrefetchedData,
+      page: currentResultsPage,
+    })
+  );
+
+  And that's a very specfic use case. It's not a generic debouncer.
  */
-export const createDebouncedSearch = ({
+const debouncedProductSearch = ({
   action,
   setSearchResults,
   setTotalResults,
-  setPrefetchedData, // pass this from Menu
+  setPrefetchedData,
   delay = 300,
 }) =>
   debounce(async (query, page) => {
@@ -44,3 +56,5 @@ export const createDebouncedSearch = ({
       console.error("Error fetching search results:", error);
     }
   }, delay);
+
+export default debouncedProductSearch;

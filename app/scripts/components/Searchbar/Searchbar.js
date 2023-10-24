@@ -1,71 +1,39 @@
-import React, { useEffect, useRef } from "react";
-import PropTypes from "prop-types";
-import { searchItems } from "../../api/services";
-import { createDebouncedSearch } from "./helpers";
+import React from "react";
+import { useProductSearch } from "../ProductSearch";
 
-const Searchbar = ({
-  currentResultsPage,
-  isShown,
-  toggleShowSearch,
-  setSearchResults,
-  setTotalResults,
-  setPrefetchedData,
-  searchValue,
-  setSearchValue,
-}) => {
-  const debouncedSearchRef = useRef(
-    createDebouncedSearch({
-      action: searchItems,
-      setSearchResults,
-      setTotalResults,
-      setPrefetchedData,
-      page: currentResultsPage,
-    })
+const SearchInputButton = () => {
+  const { showSearch, toggleShowSearch } = useProductSearch();
+  const action = showSearch ? "close" : "search";
+  return (
+    <button
+      className="search-trigger"
+      aria-label={action}
+      onClick={toggleShowSearch}
+    >
+      <i className={`material-icons ${action}`}>{action}</i>
+    </button>
   );
+};
 
-  useEffect(() => {
-    if (searchValue) {
-      debouncedSearchRef.current(searchValue, currentResultsPage);
-    }
-  }, [searchValue, currentResultsPage]);
+const Searchbar = () => {
+  const { showSearch, searchValue, setSearchValue } = useProductSearch();
 
   const onSearch = (e) => {
     const query = e.target.value;
     setSearchValue(query);
-
-    if (!query || query.length < 2) {
-      return;
-    }
-    debouncedSearchRef.current(query);
   };
 
+  const classNames = ["search-input-container"];
+  if (showSearch) {
+    classNames.push("showing");
+  }
+
   return (
-    <div className={`search-container${isShown ? " showing" : ""}`}>
-      <div>
-        <input type="text" value={searchValue} onChange={onSearch} />
-        <button
-          className="search-trigger"
-          aria-label={isShown ? "Hide searchbar" : "Show searchbar"}
-          onClick={toggleShowSearch}
-        >
-          <i className={`material-icons ${isShown ? "close" : "search"}`}>
-            {isShown ? "close" : "search"}
-          </i>
-        </button>
-      </div>
+    <div className={classNames.join(" ")}>
+      <input type="text" value={searchValue} onChange={onSearch} />
+      <SearchInputButton />
     </div>
   );
-};
-
-Searchbar.propTypes = {
-  currentResultsPage: PropTypes.number.isRequired,
-  isShown: PropTypes.bool.isRequired,
-  setSearchResults: PropTypes.func.isRequired,
-  setTotalResults: PropTypes.func.isRequired,
-  toggleShowSearch: PropTypes.func.isRequired,
-  setPrefetchedData: PropTypes.func.isRequired,
-  searchValue: PropTypes.string.isRequired,
-  setSearchValue: PropTypes.func.isRequired,
 };
 
 export default Searchbar;

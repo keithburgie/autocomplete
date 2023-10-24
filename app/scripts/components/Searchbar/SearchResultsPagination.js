@@ -1,76 +1,56 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { useProductSearch } from "../ProductSearch";
 
-const SearchResultsPagination = ({
-  currentPageNumber,
-  itemsPerPage,
-  numSearchResults,
-  setCurrentResultsPage,
-  prefetchedData,
-  setSearchResults,
-}) => {
-  const getFirstItemIndex = () => {
-    return (currentPageNumber - 1) * itemsPerPage + 1;
-  };
-  const getLastItemIndex = () => {
-    const itemIndex = getFirstItemIndex() + itemsPerPage - 1;
-    return itemIndex > numSearchResults ? numSearchResults : itemIndex;
-  };
+const SearchResultsPagination = () => {
+  const {
+    numSearchResults,
+    currentResultsPage,
+    setCurrentResultsPage,
+    prefetchedData,
+    setSearchResults,
+  } = useProductSearch();
 
-  const firstItemIndex = getFirstItemIndex();
-  const lastItemIndex = getLastItemIndex();
+  const maxItemsPerPage = 4;
 
-  const getDisplayedRange = () => {
-    if (firstItemIndex === lastItemIndex) {
-      return `${lastItemIndex}`;
+  const maxPages = Math.ceil(numSearchResults / maxItemsPerPage);
+  console.log(maxPages);
+
+  // Calculate the start and end item indices for the current page
+  const startItemIndex = (currentResultsPage - 1) * maxItemsPerPage + 1;
+
+  const endItemIndex = Math.min(
+    currentResultsPage * maxItemsPerPage,
+    numSearchResults
+  );
+
+  const handleNext = () => {
+    setCurrentResultsPage((prevPage) => prevPage + 1);
+    if (prefetchedData[currentResultsPage + 1]) {
+      setSearchResults(prefetchedData[currentResultsPage + 1]);
     }
-    return `${firstItemIndex}-${lastItemIndex}`;
   };
 
-  const handlePrevClick = () => {
-    const newPage = currentPageNumber - 1;
-    if (prefetchedData[newPage]) {
-      setSearchResults(prefetchedData[newPage]);
-    }
-    setCurrentResultsPage(newPage);
+  const handlePrevious = () => {
+    setCurrentResultsPage((prevPage) => prevPage - 1);
   };
-
-  const handleNextClick = () => {
-    const newPage = currentPageNumber + 1;
-    if (prefetchedData[newPage]) {
-      setSearchResults(prefetchedData[newPage]);
-    }
-    setCurrentResultsPage(newPage);
-  };
-
-  const hasMultiplePages = numSearchResults > itemsPerPage;
-
-  const isLastPage =
-    currentPageNumber === Math.ceil(numSearchResults / itemsPerPage);
 
   return (
     <div className="search-results-pagination">
       <p>
-        Showing {getDisplayedRange()} of {numSearchResults} results
+        Showing {startItemIndex}-
+        {startItemIndex === endItemIndex ? "" : `${endItemIndex} `}
+        of {numSearchResults} results
       </p>
-      {currentPageNumber > 1 && (
-        <button onClick={handlePrevClick}>Previous</button>
-      )}
-
-      {hasMultiplePages && !isLastPage && (
-        <button onClick={handleNextClick}>Next</button>
-      )}
+      <div>
+        {currentResultsPage > 1 && (
+          <button onClick={handlePrevious}>Previous</button>
+        )}
+        {currentResultsPage < maxPages && (
+          <button onClick={handleNext}>Next</button>
+        )}
+      </div>
     </div>
   );
-};
-
-SearchResultsPagination.propTypes = {
-  currentPageNumber: PropTypes.number.isRequired,
-  itemsPerPage: PropTypes.number.isRequired,
-  numSearchResults: PropTypes.number.isRequired,
-  setCurrentResultsPage: PropTypes.func.isRequired,
-  prefetchedData: PropTypes.object.isRequired,
-  setSearchResults: PropTypes.func.isRequired,
 };
 
 export default SearchResultsPagination;
