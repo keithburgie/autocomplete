@@ -65,6 +65,30 @@
   }
 }
 
+/* Start state for entering */
+.fade-enter,
+.fade-appear {
+  opacity: 0;
+}
+
+/* End state for entering */
+.fade-enter-active,
+.fade-appear-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+/* Start state for exiting */
+.fade-exit {
+  opacity: 1;
+}
+
+/* End state for exiting */
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-in;
+}
+
 .search-results {
   $product-row-gap: 0.35rem;
 

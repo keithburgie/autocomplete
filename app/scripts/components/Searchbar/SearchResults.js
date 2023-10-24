@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ProductDisplay, ProductShowcase } from "../ProductDisplay";
 import SearchResultsPagination from "./SearchResultsPagination";
 import { useProductSearch } from "../ProductSearch";
+import { CSSTransition } from "react-transition-group";
 
 const SearchResults = () => {
   const { searchResults, setSearchValue } = useProductSearch();
@@ -13,6 +14,19 @@ const SearchResults = () => {
       setActiveItem(searchResults[0]);
     }
   }, [searchResults]);
+
+  // Handle showcase transition
+  const [displayedProduct, setDisplayedProduct] = useState(activeItem);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(false);
+    setDisplayedProduct(activeItem);
+  }, [activeItem]);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, [displayedProduct]);
 
   return (
     <div className="search-results-container">
@@ -33,10 +47,17 @@ const SearchResults = () => {
       </section>
       <section className="search-showcase">
         {activeItem && (
-          <ProductShowcase
-            product={activeItem}
-            setSearchValue={setSearchValue}
-          />
+          <CSSTransition
+            in={isVisible}
+            timeout={300}
+            classNames="fade"
+            unmountOnExit
+          >
+            <ProductShowcase
+              product={displayedProduct || activeItem}
+              setSearchValue={setSearchValue}
+            />
+          </CSSTransition>
         )}
       </section>
     </div>
