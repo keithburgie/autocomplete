@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { ProductDisplay, ProductShowcase } from "../ProductDisplay";
 import SearchResultsPagination from "./SearchResultsPagination";
-
 import { useProductSearch } from "../ProductSearch";
 
 const SearchResults = () => {
-  const {
-    searchResults,
-    numSearchResults,
-    currentResultsPage,
-    prefetchedData,
-    setSearchResults,
-    setCurrentResultsPage,
-    setSearchValue,
-  } = useProductSearch();
+  const { searchResults, setSearchValue } = useProductSearch();
 
   const [activeItem, setActiveItem] = useState(null);
 
@@ -38,14 +29,7 @@ const SearchResults = () => {
             />
           ))}
         </ul>
-        <SearchResultsPagination
-          currentPageNumber={currentResultsPage}
-          itemsPerPage={searchResults.length}
-          numSearchResults={numSearchResults}
-          setCurrentResultsPage={setCurrentResultsPage}
-          prefetchedData={prefetchedData}
-          setSearchResults={setSearchResults}
-        />
+        <SearchResultsPagination />
       </section>
       <section className="search-showcase">
         {activeItem && (
