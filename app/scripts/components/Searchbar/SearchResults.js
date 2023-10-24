@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import ProductDisplay from "./ProductDisplay";
+import { ProductDisplay, ProductShowcase } from "../ProductDisplay";
 import SearchResultsPagination from "./SearchResultsPagination";
 
 const SearchResults = ({
@@ -12,23 +12,28 @@ const SearchResults = ({
   setSearchResults,
 }) => {
   const [activeItem, setActiveItem] = useState(null);
+
   useEffect(() => {
-    console.log("Active item updated:", activeItem);
-  }, [activeItem]);
+    if (searchResults && searchResults.length > 0) {
+      setActiveItem(searchResults[0]);
+    }
+  }, [searchResults]);
+
   return (
-    <div className="search-results--overlay">
-      <section>
-        <h2 className="section-heading">Featured Results</h2>
-        <div className="search-results-grid">
+    <div className="search-results-container">
+      <section className="search-results">
+        <h2 className="section-heading">Search Results</h2>
+        <ul>
           {searchResults.map((item) => (
             <ProductDisplay
+              As="li"
               key={item._id}
               product={item}
               activeItem={activeItem}
               setActiveItem={setActiveItem}
             />
           ))}
-        </div>
+        </ul>
         <SearchResultsPagination
           currentPageNumber={currentResultsPage}
           itemsPerPage={searchResults.length}
@@ -38,17 +43,11 @@ const SearchResults = ({
           setSearchResults={setSearchResults}
         />
       </section>
-      <section>
-        <h2 className="section-heading">Top Searches?</h2>
-        <div className="active-item-preview">
-          {activeItem && (
-            <ProductDisplay
-              product={activeItem}
-              activeItem={null}
-              setActiveItem={() => {}}
-            />
-          )}
-        </div>
+      <section className="search-showcase">
+        {/* <h2 className="section-heading">Top Searches?</h2> */}
+        {/* <div className="active-item-preview"> */}
+        {activeItem && <ProductShowcase product={activeItem} />}
+        {/* </div> */}
       </section>
     </div>
   );

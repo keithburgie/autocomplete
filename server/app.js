@@ -54,7 +54,11 @@ app.get("/search", (req, res) => {
       return (
         caseInsensitiveMatch(item._id, query) ||
         caseInsensitiveMatch(item.name, query) ||
-        caseInsensitiveMatch(item.about, query) ||
+        /**
+         * Note: In real life, I would include "about" in the search, but since the
+         * data all has the same "about" it makes the search results less interesting
+         */
+        // caseInsensitiveMatch(item.about, query) ||
         item.tags.some((tag) => caseInsensitiveMatch(tag, query))
       );
     }
