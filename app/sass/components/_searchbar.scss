@@ -66,17 +66,23 @@
 }
 
 .search-results {
+  $product-row-gap: 0.35rem;
+
   ul {
     list-style: none;
     margin: 0;
     padding: 0;
+
+    flex: 1;
+    overflow: hidden;
   }
 
   li.product-display {
     display: flex;
-    gap: 0.5rem;
+    column-gap: 0.5rem;
     align-items: center;
-    margin-bottom: 0.35rem;
+    margin-bottom: $product-row-gap;
+    height: calc(25% - #{$product-row-gap});
 
     background: linear-gradient(90deg, #f1f1f1 50%, transparent 50%);
     background-size: 200% 100%;

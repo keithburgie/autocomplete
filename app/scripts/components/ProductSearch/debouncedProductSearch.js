@@ -9,21 +9,6 @@ function debounce(func, wait) {
   };
 }
 
-/**
- * Todo: clean up and/or move this. It's made to be used like:
- * 
- * const debouncedSearchRef = useRef(
-    debouncedProductSearch({
-      action: searchItems,
-      setSearchResults,
-      setTotalResults,
-      setPrefetchedData,
-      page: currentResultsPage,
-    })
-  );
-
-  And that's a very specfic use case. It's not a generic debouncer.
- */
 const debouncedProductSearch = ({
   action,
   setSearchResults,
