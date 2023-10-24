@@ -1,21 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { SearchResults, Searchbar } from "./Searchbar";
-import { Navbar, NavbarLogo, NavbarNav } from "./Navbar";
+import React, { useEffect, useState } from "react";
+import { SearchResults, Searchbar } from "../Searchbar";
 
-const NAV_ITEMS = [
-  "HOLIDAY",
-  "WHAT'S NEW",
-  "PRODUCTS",
-  "BESTSELLERS",
-  "GOODBYES",
-  "STORES",
-  "INSPIRATION",
-];
-
-/**
- * The Menu component that lives at the top of the Page.
- */
-const Menu = () => {
+const ProductSearch = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [numSearchResults, setTotalResults] = useState(0);
@@ -40,22 +26,17 @@ const Menu = () => {
   // const hideSearch = () => setShowSearch(false);
 
   return (
-    <header className="menu">
-      <Navbar>
-        <NavbarLogo title="ELC" />
-        <NavbarNav navItems={NAV_ITEMS} />
-        <Searchbar
-          currentResultsPage={currentResultsPage}
-          isShown={showSearch}
-          searchValue={searchValue}
-          setPrefetchedData={setPrefetchedData}
-          setSearchResults={setSearchResults}
-          setSearchValue={setSearchValue}
-          setTotalResults={setTotalResults}
-          toggleShowSearch={toggleShowSearch}
-        />
-      </Navbar>
-
+    <>
+      <Searchbar
+        currentResultsPage={currentResultsPage}
+        isShown={showSearch}
+        searchValue={searchValue}
+        setPrefetchedData={setPrefetchedData}
+        setSearchResults={setSearchResults}
+        setSearchValue={setSearchValue}
+        setTotalResults={setTotalResults}
+        toggleShowSearch={toggleShowSearch}
+      />
       {showSearchResults && (
         <SearchResults
           currentResultsPage={currentResultsPage}
@@ -67,8 +48,8 @@ const Menu = () => {
           setSearchValue={setSearchValue}
         />
       )}
-    </header>
+    </>
   );
 };
 
-export default Menu;
+export default ProductSearch;
