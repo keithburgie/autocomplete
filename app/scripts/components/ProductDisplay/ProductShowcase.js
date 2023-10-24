@@ -45,7 +45,6 @@ const ProductShowcase = ({ product, setSearchValue }) => {
 
 ProductShowcase.propTypes = {
   product: productPropType,
-  searchValue: PropTypes.string.isRequired,
   setSearchValue: PropTypes.func.isRequired,
 };
 

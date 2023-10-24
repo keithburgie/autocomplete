@@ -30,7 +30,7 @@ const ProductDisplay = ({ As = "div", product, activeItem, setActiveItem }) => {
       data-active={isActiveItem}
       onClick={handleClick}
       onKeyDown={(e) => handleKeyDown(e)}
-      tabindex="0"
+      tabIndex="0"
     >
       <div className="product-image">
         <picture>

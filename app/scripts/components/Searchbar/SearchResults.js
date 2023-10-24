@@ -74,7 +74,6 @@ SearchResults.propTypes = {
   numSearchResults: PropTypes.number.isRequired,
   currentResultsPage: PropTypes.number.isRequired,
   setCurrentResultsPage: PropTypes.func.isRequired,
-  setPrefetchedData: PropTypes.func.isRequired,
   prefetchedData: PropTypes.object.isRequired,
   setSearchResults: PropTypes.func.isRequired,
   setSearchValue: PropTypes.func.isRequired,
