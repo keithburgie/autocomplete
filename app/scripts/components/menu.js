@@ -37,7 +37,7 @@ const Menu = () => {
     setShowSearch((prevState) => !prevState);
   };
 
-  const hideSearch = () => setShowSearch(false);
+  // const hideSearch = () => setShowSearch(false);
 
   return (
     <header className="menu">
@@ -45,25 +45,25 @@ const Menu = () => {
         <NavbarLogo title="ELC" />
         <NavbarNav navItems={NAV_ITEMS} />
         <Searchbar
-          isShown={showSearch}
-          toggleShowSearch={toggleShowSearch}
-          setSearchResults={setSearchResults}
-          setTotalResults={setTotalResults}
           currentResultsPage={currentResultsPage}
-          setPrefetchedData={setPrefetchedData}
+          isShown={showSearch}
           searchValue={searchValue}
+          setPrefetchedData={setPrefetchedData}
+          setSearchResults={setSearchResults}
           setSearchValue={setSearchValue}
+          setTotalResults={setTotalResults}
+          toggleShowSearch={toggleShowSearch}
         />
       </Navbar>
 
       {showSearchResults && (
         <SearchResults
-          searchResults={searchResults}
-          numSearchResults={numSearchResults}
-          setCurrentResultsPage={setCurrentResultsPage}
           currentResultsPage={currentResultsPage}
-          setSearchResults={setSearchResults}
+          numSearchResults={numSearchResults}
           prefetchedData={prefetchedData}
+          searchResults={searchResults}
+          setCurrentResultsPage={setCurrentResultsPage}
+          setSearchResults={setSearchResults}
           setSearchValue={setSearchValue}
         />
       )}
