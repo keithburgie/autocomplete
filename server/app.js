@@ -42,8 +42,11 @@ app.use(
   })
 );
 
+const MAX_RESULTS_PER_PAGE = 4;
+
 app.get("/search", (req, res) => {
   const query = req.query.query;
+  const pageNumber = parseInt(req.query.page || "1");
 
   const results = data.filter((item) => {
     // Only return items that are active
@@ -51,13 +54,30 @@ app.get("/search", (req, res) => {
       return (
         caseInsensitiveMatch(item._id, query) ||
         caseInsensitiveMatch(item.name, query) ||
-        caseInsensitiveMatch(item.about, query) ||
+        /**
+         * Note: In real life, I would include "about" in the search, but since the
+         * data all has the same "about" it makes the search results less interesting
+         */
+        // caseInsensitiveMatch(item.about, query) ||
         item.tags.some((tag) => caseInsensitiveMatch(tag, query))
       );
     }
   });
 
-  res.json({ items: results });
+  // Step 3: Paginate the results
+  const startIndex = (pageNumber - 1) * MAX_RESULTS_PER_PAGE;
+
+  const paginatedResults = results.slice(
+    startIndex,
+    startIndex + MAX_RESULTS_PER_PAGE
+  );
+
+  res.json({
+    items: paginatedResults,
+    total: results.length,
+    currentPage: pageNumber,
+    totalPages: Math.ceil(results.length / MAX_RESULTS_PER_PAGE),
+  });
 });
 
 app.listen(SERVER_PORT, () => {
