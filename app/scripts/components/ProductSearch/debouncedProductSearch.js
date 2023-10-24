@@ -1,4 +1,4 @@
-export function debounce(func, wait) {
+function debounce(func, wait) {
   let timeout;
   return function (...args) {
     const context = this;
@@ -9,14 +9,11 @@ export function debounce(func, wait) {
   };
 }
 
-/**
- * Debounced search function
- */
-export const createDebouncedSearch = ({
+const debouncedProductSearch = ({
   action,
   setSearchResults,
   setTotalResults,
-  setPrefetchedData, // pass this from Menu
+  setPrefetchedData,
   delay = 300,
 }) =>
   debounce(async (query, page) => {
@@ -44,3 +41,5 @@ export const createDebouncedSearch = ({
       console.error("Error fetching search results:", error);
     }
   }, delay);
+
+export default debouncedProductSearch;

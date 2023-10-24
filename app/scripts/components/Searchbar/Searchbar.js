@@ -1,71 +1,32 @@
-import React, { useEffect, useRef } from "react";
-import PropTypes from "prop-types";
-import { searchItems } from "../../api/services";
-import { createDebouncedSearch } from "./helpers";
+import React from "react";
 
-const Searchbar = ({
-  currentResultsPage,
-  isShown,
-  toggleShowSearch,
-  setSearchResults,
-  setTotalResults,
-  setPrefetchedData,
-  searchValue,
-  setSearchValue,
-}) => {
-  const debouncedSearchRef = useRef(
-    createDebouncedSearch({
-      action: searchItems,
-      setSearchResults,
-      setTotalResults,
-      setPrefetchedData,
-      page: currentResultsPage,
-    })
-  );
+import { useProductSearch } from "../ProductSearch";
 
-  useEffect(() => {
-    if (searchValue) {
-      debouncedSearchRef.current(searchValue, currentResultsPage);
-    }
-  }, [searchValue, currentResultsPage]);
+const Searchbar = () => {
+  const { showSearch, searchValue, setSearchValue, toggleShowSearch } =
+    useProductSearch();
 
   const onSearch = (e) => {
     const query = e.target.value;
     setSearchValue(query);
-
-    if (!query || query.length < 2) {
-      return;
-    }
-    debouncedSearchRef.current(query);
   };
 
   return (
-    <div className={`search-container${isShown ? " showing" : ""}`}>
+    <div className={`search-container${showSearch ? " showing" : ""}`}>
       <div>
         <input type="text" value={searchValue} onChange={onSearch} />
         <button
           className="search-trigger"
-          aria-label={isShown ? "Hide searchbar" : "Show searchbar"}
+          aria-label={showSearch ? "Hide searchbar" : "Show searchbar"}
           onClick={toggleShowSearch}
         >
-          <i className={`material-icons ${isShown ? "close" : "search"}`}>
-            {isShown ? "close" : "search"}
+          <i className={`material-icons ${showSearch ? "close" : "search"}`}>
+            {showSearch ? "close" : "search"}
           </i>
         </button>
       </div>
     </div>
   );
-};
-
-Searchbar.propTypes = {
-  currentResultsPage: PropTypes.number.isRequired,
-  isShown: PropTypes.bool.isRequired,
-  setSearchResults: PropTypes.func.isRequired,
-  setTotalResults: PropTypes.func.isRequired,
-  toggleShowSearch: PropTypes.func.isRequired,
-  setPrefetchedData: PropTypes.func.isRequired,
-  searchValue: PropTypes.string.isRequired,
-  setSearchValue: PropTypes.func.isRequired,
 };
 
 export default Searchbar;

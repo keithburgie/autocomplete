@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { productPropType } from "./index";
+import { productPropType } from "./productPropTypes";
 
 const ProductShowcase = ({ product, setSearchValue }) => {
   const { picture, name, price, about, tags } = product;

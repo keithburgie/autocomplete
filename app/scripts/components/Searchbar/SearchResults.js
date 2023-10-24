@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { ProductDisplay, ProductShowcase } from "../ProductDisplay";
 import SearchResultsPagination from "./SearchResultsPagination";
 
-const SearchResults = ({
-  searchResults,
-  numSearchResults,
-  currentResultsPage,
-  setCurrentResultsPage,
-  prefetchedData,
-  setSearchResults,
-  setSearchValue,
-}) => {
+import { useProductSearch } from "../ProductSearch";
+
+const SearchResults = () => {
+  const {
+    searchResults,
+    numSearchResults,
+    currentResultsPage,
+    prefetchedData,
+    setSearchResults,
+    setCurrentResultsPage,
+    setSearchValue,
+  } = useProductSearch();
+
   const [activeItem, setActiveItem] = useState(null);
 
   useEffect(() => {
@@ -54,26 +57,6 @@ const SearchResults = ({
       </section>
     </div>
   );
-};
-
-SearchResults.propTypes = {
-  searchResults: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      isActive: PropTypes.string.isRequired,
-      price: PropTypes.string.isRequired,
-      picture: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      about: PropTypes.string.isRequired,
-      tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-    })
-  ).isRequired,
-  numSearchResults: PropTypes.number.isRequired,
-  currentResultsPage: PropTypes.number.isRequired,
-  setCurrentResultsPage: PropTypes.func.isRequired,
-  prefetchedData: PropTypes.object.isRequired,
-  setSearchResults: PropTypes.func.isRequired,
-  setSearchValue: PropTypes.func.isRequired,
 };
 
 export default SearchResults;

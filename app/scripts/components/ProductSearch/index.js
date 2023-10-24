@@ -1,3 +1,7 @@
-import ProductSearch from "./ProductSearch";
+export { default as debouncedProductSearch } from "./debouncedProductSearch";
+export { default as ProductSearch } from "./ProductSearch";
 
-export { ProductSearch };
+export {
+  ProductSearchContextProvider,
+  useProductSearch,
+} from "./ProductSearchContext";
