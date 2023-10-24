@@ -1,30 +1,37 @@
 import React from "react";
-
 import { useProductSearch } from "../ProductSearch";
 
+const SearchInputButton = () => {
+  const { showSearch, toggleShowSearch } = useProductSearch();
+  const action = showSearch ? "close" : "search";
+  return (
+    <button
+      className="search-trigger"
+      aria-label={action}
+      onClick={toggleShowSearch}
+    >
+      <i className={`material-icons ${action}`}>{action}</i>
+    </button>
+  );
+};
+
 const Searchbar = () => {
-  const { showSearch, searchValue, setSearchValue, toggleShowSearch } =
-    useProductSearch();
+  const { showSearch, searchValue, setSearchValue } = useProductSearch();
 
   const onSearch = (e) => {
     const query = e.target.value;
     setSearchValue(query);
   };
 
+  const classNames = ["search-input-container"];
+  if (showSearch) {
+    classNames.push("showing");
+  }
+
   return (
-    <div className={`search-container${showSearch ? " showing" : ""}`}>
-      <div>
-        <input type="text" value={searchValue} onChange={onSearch} />
-        <button
-          className="search-trigger"
-          aria-label={showSearch ? "Hide searchbar" : "Show searchbar"}
-          onClick={toggleShowSearch}
-        >
-          <i className={`material-icons ${showSearch ? "close" : "search"}`}>
-            {showSearch ? "close" : "search"}
-          </i>
-        </button>
-      </div>
+    <div className={classNames.join(" ")}>
+      <input type="text" value={searchValue} onChange={onSearch} />
+      <SearchInputButton />
     </div>
   );
 };
