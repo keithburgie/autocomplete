@@ -10,9 +10,9 @@ const Searchbar = ({
   setSearchResults,
   setTotalResults,
   setPrefetchedData,
+  searchValue,
+  setSearchValue,
 }) => {
-  const [searchValue, setSearchValue] = useState("");
-
   const debouncedSearchRef = useRef(
     createDebouncedSearch({
       action: searchItems,
@@ -25,7 +25,7 @@ const Searchbar = ({
 
   useEffect(() => {
     if (searchValue) {
-      debouncedSearchRef.current(searchValue, currentResultsPage); // pass currentResultsPage here
+      debouncedSearchRef.current(searchValue, currentResultsPage);
     }
   }, [searchValue, currentResultsPage]);
 
@@ -63,8 +63,9 @@ Searchbar.propTypes = {
   setSearchResults: PropTypes.func.isRequired,
   setTotalResults: PropTypes.func.isRequired,
   toggleShowSearch: PropTypes.func.isRequired,
-
   setPrefetchedData: PropTypes.func.isRequired,
+  searchValue: PropTypes.string.isRequired,
+  setSearchValue: PropTypes.func.isRequired,
 };
 
 export default Searchbar;

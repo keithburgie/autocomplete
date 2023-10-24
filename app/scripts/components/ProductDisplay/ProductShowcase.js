@@ -1,12 +1,21 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { productPropType } from "./index";
 
-const ProductShowcase = ({ product }) => {
+const ProductShowcase = ({ product, setSearchValue }) => {
   const { picture, name, price, about, tags } = product;
 
   const handleClick = () => {
     // create a button that would send a user to a page.
     // also needs a close button
+  };
+
+  const handleSearchTagClick = (tag) => {
+    // Set the search value to the clicked tag
+    setSearchValue(tag);
+
+    // Optionally, you can also reset the current results page to 1 if desired
+    // setCurrentResultsPage(1);
   };
 
   return (
@@ -26,7 +35,15 @@ const ProductShowcase = ({ product }) => {
           <h3>Related Searches:</h3>
           <ul>
             {tags.map((tag) => (
-              <li key={tag}>{tag}</li>
+              <li key={tag}>
+                <button
+                  aria-label={`Search for ${tag}`}
+                  title={`Search for ${tag}`}
+                  onClick={() => handleSearchTagClick(tag)}
+                >
+                  {tag}
+                </button>
+              </li>
             ))}
           </ul>
         </div>
@@ -37,6 +54,8 @@ const ProductShowcase = ({ product }) => {
 
 ProductShowcase.propTypes = {
   product: productPropType,
+  searchValue: PropTypes.string.isRequired,
+  setSearchValue: PropTypes.func.isRequired,
 };
 
 export default ProductShowcase;

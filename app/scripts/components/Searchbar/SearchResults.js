@@ -10,6 +10,7 @@ const SearchResults = ({
   setCurrentResultsPage,
   prefetchedData,
   setSearchResults,
+  setSearchValue,
 }) => {
   const [activeItem, setActiveItem] = useState(null);
 
@@ -46,7 +47,12 @@ const SearchResults = ({
       <section className="search-showcase">
         {/* <h2 className="section-heading">Top Searches?</h2> */}
         {/* <div className="active-item-preview"> */}
-        {activeItem && <ProductShowcase product={activeItem} />}
+        {activeItem && (
+          <ProductShowcase
+            product={activeItem}
+            setSearchValue={setSearchValue}
+          />
+        )}
         {/* </div> */}
       </section>
     </div>
@@ -71,6 +77,7 @@ SearchResults.propTypes = {
   setPrefetchedData: PropTypes.func.isRequired,
   prefetchedData: PropTypes.object.isRequired,
   setSearchResults: PropTypes.func.isRequired,
+  setSearchValue: PropTypes.func.isRequired,
 };
 
 export default SearchResults;

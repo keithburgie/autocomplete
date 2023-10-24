@@ -24,11 +24,13 @@ const Menu = () => {
 
   const [prefetchedData, setPrefetchedData] = useState({});
 
+  const [searchValue, setSearchValue] = useState("");
+
   useEffect(() => {
-    if (searchResults.length > 0) {
-      setShowSearchResults(true);
-    }
-  }, [searchResults]);
+    const showSearchResultsPanel =
+      searchValue.length > 0 && searchResults.length > 0;
+    setShowSearchResults(showSearchResultsPanel);
+  }, [searchResults, searchValue.length]);
 
   // Explanation: We don't need the event or to prevent default after changing the anchor element to a button
   const toggleShowSearch = () => {
@@ -49,6 +51,8 @@ const Menu = () => {
           setTotalResults={setTotalResults}
           currentResultsPage={currentResultsPage}
           setPrefetchedData={setPrefetchedData}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
         />
       </Navbar>
 
@@ -60,6 +64,7 @@ const Menu = () => {
           currentResultsPage={currentResultsPage}
           setSearchResults={setSearchResults}
           prefetchedData={prefetchedData}
+          setSearchValue={setSearchValue}
         />
       )}
     </header>

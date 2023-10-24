@@ -177,24 +177,17 @@
       ul {
         display: flex;
         flex-wrap: wrap;
-        // align-items: center;
-        gap: 0.25rem;
-        // margin-top: auto;
-      }
-    }
+        list-style: none;
+        gap: 0.35rem;
 
-    ul {
-      display: flex;
-      flex-wrap: wrap;
-      list-style: none;
-      gap: 0.35rem;
-
-      li {
-        background: #ebebeb;
-        border-radius: 8px;
-        padding: 0.25rem 0.35rem;
-        line-height: 1;
-        font-size: 1rem;
+        button {
+          background: #ebebeb;
+          border-radius: 8px;
+          padding: 0.25rem 0.35rem;
+          line-height: 1;
+          font-size: 1rem;
+          cursor: pointer;
+        }
       }
     }
   }
