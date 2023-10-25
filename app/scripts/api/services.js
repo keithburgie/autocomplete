@@ -1,6 +1,6 @@
 import { BASE_URL } from "./config";
 
-export const searchItems = async (query, page = 1) => {
+export const searchProducts = async (query, page = 1) => {
   const endpoint = `${BASE_URL}/search?query=${encodeURIComponent(
     query
   )}&page=${page}`;

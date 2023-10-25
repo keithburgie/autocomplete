@@ -9,21 +9,6 @@ function debounce(func, wait) {
   };
 }
 
-/**
- * Todo: clean up and/or move this. It's made to be used like:
- * 
- * const debouncedSearchRef = useRef(
-    debouncedProductSearch({
-      action: searchItems,
-      setSearchResults,
-      setTotalResults,
-      setPrefetchedData,
-      page: currentResultsPage,
-    })
-  );
-
-  And that's a very specfic use case. It's not a generic debouncer.
- */
 const debouncedProductSearch = ({
   action,
   setSearchResults,
@@ -32,6 +17,11 @@ const debouncedProductSearch = ({
   delay = 300,
 }) =>
   debounce(async (query, page) => {
+    // Require a minimum of 3 characters to search
+    if (query.length < 3) {
+      return;
+    }
+
     try {
       const data = await action(query, page);
       setSearchResults(data.items);

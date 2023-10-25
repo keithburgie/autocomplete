@@ -13,8 +13,9 @@ const ProductShowcase = ({ product, setSearchValue }) => {
     <div className="product-showcase">
       <div className="product-image">
         <picture>
-          <source srcSet={picture} media="(min-width: 1024px)" />
-          <source srcSet={picture} media="(min-width: 768px)" />
+          {/* If other sizes were available... */}
+          {/* <source srcSet={picture-lg} media="(min-width: 1024px)" /> */}
+          {/* <source srcSet={picture-md} media="(min-width: 768px)" /> */}
           <img src={picture} alt={name} loading="lazy" />
         </picture>
       </div>
