@@ -17,6 +17,11 @@ const debouncedProductSearch = ({
   delay = 300,
 }) =>
   debounce(async (query, page) => {
+    // Require a minimum of 3 characters to search
+    if (query.length < 3) {
+      return;
+    }
+
     try {
       const data = await action(query, page);
       setSearchResults(data.items);

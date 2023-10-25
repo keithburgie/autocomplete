@@ -35,8 +35,8 @@ const app = express();
 
 app.use(
   cors({
-    origin: `${SERVER_PROTOCOL}://${APP_HOST}:${APP_PORT}`, // Allow only 'http://localhost:3030' to access your Express server
-    optionsSuccessStatus: 200, // Respond with 200 for preflight OPTIONS requests
+    origin: `${SERVER_PROTOCOL}://${APP_HOST}:${APP_PORT}`,
+    optionsSuccessStatus: 200,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -64,7 +64,7 @@ app.get("/search", (req, res) => {
     }
   });
 
-  // Step 3: Paginate the results
+  // Paginate the results
   const startIndex = (pageNumber - 1) * MAX_RESULTS_PER_PAGE;
 
   const paginatedResults = results.slice(

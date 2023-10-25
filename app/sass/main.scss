@@ -5,7 +5,6 @@
 // Colours and settings
 $siteWidth: 80rem;
 $headerHeight: 4.375rem;
-$navItemFontSize: 1.125rem;
 
 // Global styles should be imported first
 @import "global";
@@ -14,7 +13,6 @@ $navItemFontSize: 1.125rem;
 @import "pages/home";
 
 // Component styles
-@import "components/menu";
 @import "components/navbar";
 @import "components/searchbar";
 @import "components/searchResults";

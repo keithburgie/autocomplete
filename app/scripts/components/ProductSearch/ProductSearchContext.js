@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import PropTypes from "prop-types";
-import { searchItems } from "../../api/services";
+import { searchProducts } from "../../api/services";
 import debouncedProductSearch from "./debouncedProductSearch";
 
 const ProductSearchContext = createContext();
@@ -44,7 +44,7 @@ export const ProductSearchContextProvider = ({ children }) => {
 
   const debouncedSearchRef = useRef(
     debouncedProductSearch({
-      action: searchItems,
+      action: searchProducts,
       setSearchResults,
       setTotalResults,
       setPrefetchedData,
@@ -61,18 +61,6 @@ export const ProductSearchContextProvider = ({ children }) => {
   const toggleShowSearch = () => {
     setShowSearch((prevState) => !prevState);
   };
-
-  // const contextState = {
-  //   showSearch,
-  //   searchResults,
-  //   numSearchResults,
-  //   showSearchResults,
-  //   currentResultsPage,
-  //   prefetchedData,
-  //   searchValue,
-  // };
-
-  // console.log({ contextState });
 
   useEffect(() => {
     if (searchValue) {
