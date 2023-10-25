@@ -1,64 +1,64 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { searchItems } from "../../api/services";
-import { createDebouncedSearch } from "./helpers";
+import React from "react";
+import { useProductSearch } from "../ProductSearch";
 
-const Searchbar = ({ isShown, toggleShowSearch, setSearchResults }) => {
-  const [searchValue, setSearchValue] = useState("cond");
-  const [isSearching, setIsSearching] = useState(false);
+const SearchButton = () => {
+  const { searchValue } = useProductSearch();
 
-  const debouncedSearch = createDebouncedSearch(searchItems, setSearchResults);
-
-  /**
-   * Calls upon search change.
-   * @param {Event} e - The event from a text change handler.
-   */
-  const onSearch = (e) => {
-    const query = e.target.value;
-    setSearchValue(query);
-
-    if (!query || query.length < 2) {
-      return;
-    }
-
-    debouncedSearch(query);
+  const handleSearch = () => {
+    window.alert("On a real website, you'd be taken to a search results page");
   };
-
   return (
-    <>
-      <div className={`search-container${isShown ? " showing" : ""}`}>
-        <div>
-          <input type="text" value={searchValue} onChange={onSearch} />
-          <button
-            className="search-trigger"
-            aria-label={isShown ? "Hide searchbar" : "Show searchbar"}
-            onClick={toggleShowSearch}
-          >
-            <i className={`material-icons ${isShown ? "close" : "search"}`}>
-              {isShown ? "close" : "search"}
-            </i>
-          </button>
-        </div>
-      </div>
-    </>
+    <button
+      className="search-button"
+      aria-label="search"
+      onClick={handleSearch}
+      disabled={searchValue.length === 0}
+    >
+      <i className="material-icons search">search</i>
+    </button>
   );
 };
 
-Searchbar.propTypes = {
-  /**
-   * Whether or not the search component is shown.
-   */
-  isShown: PropTypes.bool.isRequired,
-  /**
-   * Handler to close or hide the search component.
-   * Expected signature: (value: React.SetStateAction<boolean>) => void
-   */
-  setSearchResults: PropTypes.func.isRequired,
-  /**
-   * Handler to close or hide the search component.
-   * Expected signature: (value: React.SetStateAction<boolean>) => void
-   */
-  toggleShowSearch: PropTypes.func.isRequired,
+const ClearButton = () => {
+  const { setSearchValue } = useProductSearch();
+  return (
+    <button
+      className="clear-search-button"
+      aria-label="clear search"
+      onClick={() => setSearchValue("")}
+    >
+      <i className="material-icons close">close</i>
+    </button>
+  );
+};
+
+const Searchbar = () => {
+  const { showSearch, searchValue, setSearchValue } = useProductSearch();
+
+  const onSearch = (e) => {
+    const query = e.target.value;
+    setSearchValue(query);
+  };
+
+  const classNames = ["search-input-container"];
+  if (showSearch) {
+    classNames.push("showing");
+  }
+
+  return (
+    <div className={classNames.join(" ")}>
+      <div className="search-input-group">
+        <input
+          type="text"
+          placeholder="Search ELC"
+          value={searchValue}
+          onChange={onSearch}
+        />
+        {searchValue.length > 0 && <ClearButton />}
+      </div>
+      <SearchButton />
+    </div>
+  );
 };
 
 export default Searchbar;
