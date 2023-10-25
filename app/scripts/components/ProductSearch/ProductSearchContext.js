@@ -62,17 +62,17 @@ export const ProductSearchContextProvider = ({ children }) => {
     setShowSearch((prevState) => !prevState);
   };
 
-  const contextState = {
-    showSearch,
-    searchResults,
-    numSearchResults,
-    showSearchResults,
-    currentResultsPage,
-    prefetchedData,
-    searchValue,
-  };
+  // const contextState = {
+  //   showSearch,
+  //   searchResults,
+  //   numSearchResults,
+  //   showSearchResults,
+  //   currentResultsPage,
+  //   prefetchedData,
+  //   searchValue,
+  // };
 
-  console.log({ contextState });
+  // console.log({ contextState });
 
   useEffect(() => {
     if (searchValue) {

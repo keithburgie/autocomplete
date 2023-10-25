@@ -1,16 +1,33 @@
 import React from "react";
 import { useProductSearch } from "../ProductSearch";
 
-const SearchInputButton = () => {
-  const { showSearch, toggleShowSearch } = useProductSearch();
-  const action = showSearch ? "close" : "search";
+const SearchButton = () => {
+  const { searchValue } = useProductSearch();
+
+  const handleSearch = () => {
+    window.alert("On a real website, you'd be taken to a search results page");
+  };
   return (
     <button
-      className="search-trigger"
-      aria-label={action}
-      onClick={toggleShowSearch}
+      className="search-button"
+      aria-label="search"
+      onClick={handleSearch}
+      disabled={searchValue.length === 0}
     >
-      <i className={`material-icons ${action}`}>{action}</i>
+      <i className="material-icons search">search</i>
+    </button>
+  );
+};
+
+const ClearButton = () => {
+  const { setSearchValue } = useProductSearch();
+  return (
+    <button
+      className="clear-search-button"
+      aria-label="clear search"
+      onClick={() => setSearchValue("")}
+    >
+      <i className="material-icons close">close</i>
     </button>
   );
 };
@@ -30,8 +47,16 @@ const Searchbar = () => {
 
   return (
     <div className={classNames.join(" ")}>
-      <input type="text" value={searchValue} onChange={onSearch} />
-      <SearchInputButton />
+      <div className="search-input-group">
+        <input
+          type="text"
+          placeholder="Search ELC"
+          value={searchValue}
+          onChange={onSearch}
+        />
+        {searchValue.length > 0 && <ClearButton />}
+      </div>
+      <SearchButton />
     </div>
   );
 };

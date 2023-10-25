@@ -1,13 +1,13 @@
 .menu-navbar {
   width: 100%;
   display: flex;
+  position: relative;
   justify-content: space-between;
   align-items: center;
   align-items: stretch;
   max-width: $siteWidth;
   margin: 0 auto;
   font-size: 1rem;
-
   @media screen and (min-width: 1200px) {
     font-size: 1.125rem;
   }
@@ -43,7 +43,6 @@
   }
 
   .nav-item {
-    // font-size: $navItemFontSize;
     text-transform: uppercase;
     text-decoration: none;
     white-space: nowrap;

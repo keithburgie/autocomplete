@@ -5,24 +5,27 @@ import { useProductSearch } from "../ProductSearch";
 import { CSSTransition } from "react-transition-group";
 
 const SearchResults = () => {
-  const { searchResults, setSearchValue } = useProductSearch();
+  const { currentResultsPage, searchResults, setSearchValue } =
+    useProductSearch();
 
   const [activeItem, setActiveItem] = useState(null);
+  const [showcaseProduct, setShowcaseProduct] = useState(null);
 
   useEffect(() => {
     if (searchResults && searchResults.length > 0) {
       setActiveItem(searchResults[0]);
+      setShowcaseProduct(searchResults[0]);
     }
   }, [searchResults]);
 
   // Handle showcase transition
-  const [showcaseProduct, setShowcaseProduct] = useState(activeItem);
+
   const [showShowcase, setShowShowcase] = useState(false);
 
   useEffect(() => {
     setShowShowcase(false);
     setShowcaseProduct(activeItem);
-  }, [activeItem]);
+  }, [activeItem, currentResultsPage]);
 
   useEffect(() => {
     setShowShowcase(true);

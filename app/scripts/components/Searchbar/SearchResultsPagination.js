@@ -13,7 +13,6 @@ const SearchResultsPagination = () => {
   const maxItemsPerPage = 4;
 
   const maxPages = Math.ceil(numSearchResults / maxItemsPerPage);
-  console.log(maxPages);
 
   // Calculate the start and end item indices for the current page
   const startItemIndex = (currentResultsPage - 1) * maxItemsPerPage + 1;
@@ -36,19 +35,25 @@ const SearchResultsPagination = () => {
 
   return (
     <div className="search-results-pagination">
+      <button
+        onClick={handlePrevious}
+        style={{ opacity: currentResultsPage > 1 ? 1 : 0 }}
+      >
+        Previous
+      </button>
+
       <p>
-        Showing {startItemIndex}-
+        Showing #{startItemIndex}-
         {startItemIndex === endItemIndex ? "" : `${endItemIndex} `}
         of {numSearchResults} results
       </p>
-      <div>
-        {currentResultsPage > 1 && (
-          <button onClick={handlePrevious}>Previous</button>
-        )}
-        {currentResultsPage < maxPages && (
-          <button onClick={handleNext}>Next</button>
-        )}
-      </div>
+
+      <button
+        onClick={handleNext}
+        style={{ opacity: currentResultsPage < maxPages ? 1 : 0 }}
+      >
+        Next
+      </button>
     </div>
   );
 };
