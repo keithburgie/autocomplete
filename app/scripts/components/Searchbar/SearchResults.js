@@ -16,17 +16,17 @@ const SearchResults = () => {
   }, [searchResults]);
 
   // Handle showcase transition
-  const [displayedProduct, setDisplayedProduct] = useState(activeItem);
-  const [isVisible, setIsVisible] = useState(false);
+  const [showcaseProduct, setShowcaseProduct] = useState(activeItem);
+  const [showShowcase, setShowShowcase] = useState(false);
 
   useEffect(() => {
-    setIsVisible(false);
-    setDisplayedProduct(activeItem);
+    setShowShowcase(false);
+    setShowcaseProduct(activeItem);
   }, [activeItem]);
 
   useEffect(() => {
-    setIsVisible(true);
-  }, [displayedProduct]);
+    setShowShowcase(true);
+  }, [showcaseProduct]);
 
   return (
     <div className="search-results-container">
@@ -48,13 +48,13 @@ const SearchResults = () => {
       <section className="search-showcase">
         {activeItem && (
           <CSSTransition
-            in={isVisible}
-            timeout={300}
+            in={showShowcase}
+            timeout={200}
             classNames="fade"
             unmountOnExit
           >
             <ProductShowcase
-              product={displayedProduct || activeItem}
+              product={showcaseProduct || activeItem}
               setSearchValue={setSearchValue}
             />
           </CSSTransition>

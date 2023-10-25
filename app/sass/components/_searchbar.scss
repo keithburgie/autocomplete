@@ -2,13 +2,15 @@
   position: relative;
   flex: 1;
   margin-left: auto;
+  min-width: 11rem;
+  max-width: 16rem;
 
   &.showing {
     display: block;
   }
 
   input[type="text"] {
-    font-size: $navItemFontSize;
+    // font-size: $navItemFontSize;
     height: 100%;
     flex: 1;
     border: none;
